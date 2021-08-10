@@ -63,11 +63,37 @@ class _WorkOutScreenState extends State<WorkOutScreen> {
                     )
                   ],
                 ),
-                Center(
-                  child: Text(
-                    "Workouts",
-                    style: TextStyle(color: Colors.black),
-                  ),
+                Container(
+                  width: SizeConfig.screenWidth,
+                  height: SizeConfig.screenHeight * 0.25,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 6,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                            width: SizeConfig.screenWidth * 0.4,
+                            height: SizeConfig.screenHeight * 0.22,
+                            margin: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                border: Border.all(
+                                    color: Colors.grey.shade600, width: 1.2)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Body Workout number ${index + 1}",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                            ));
+                      }),
                 )
               ],
             ),
