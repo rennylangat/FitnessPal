@@ -11,6 +11,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Map<String, dynamic>> mealList = [
+    {
+      "meal": "BREAKFAST",
+      "title": "Fruit granola",
+      "calories": "271",
+      "imgURL": "assets/images/dumbell.png",
+      "time": "10",
+    },
+    {
+      "meal": "DINNER",
+      "title": "Pesto pasta",
+      "calories": "612",
+      "imgURL": "assets/images/dumbell.png",
+      "time": "16",
+    },
+    {
+      "meal": "SNACK",
+      "title": "Fruit granola",
+      "calories": "271",
+      "imgURL": "assets/images/dumbell.png",
+      "time": "10",
+    },
+    {
+      "meal": "DESSET",
+      "title": "Fruit granola",
+      "calories": "271",
+      "imgURL": "assets/images/dumbell.png",
+      "time": "10",
+    }
+  ];
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -30,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
+                  height: SizeConfig.screenHeight * 0.37,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -179,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: getProportionateScreenHeight(20),
+                  height: getProportionateScreenHeight(15),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 12),
@@ -191,31 +222,110 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w800),
                   ),
                 ),
+                SizedBox(
+                  height: getProportionateScreenHeight(10),
+                ),
                 Container(
-                  width: SizeConfig.screenWidth * 0.3,
+                  width: SizeConfig.screenWidth,
                   height: SizeConfig.screenHeight * 0.2,
+                  padding: EdgeInsets.only(left: 12),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: mealList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return TodayMeals(
+                        meal: mealList[index]["meal"],
+                        title: mealList[index]["title"],
+                        calories: mealList[index]["calories"],
+                        imgURL: mealList[index]["imgURL"],
+                        time: mealList[index]["time"],
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(15),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
                   child: Container(
-                    width: SizeConfig.screenWidth * 0.25,
-                    height: SizeConfig.screenHeight * 0.2,
+                    width: SizeConfig.screenWidth,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(),
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("BREAKFAST"),
-                              Text("Fruit granoia"),
-                              Text("271 kcal"),
-                              Text("10 min")
-                            ],
+                        color: Colors.blue.shade900,
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "YOUR NEXT WORKOUT",
+                            style: TextStyle(
+                                color: Colors.white54,
+                                fontSize: getProportionateScreenHeight(14)),
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            height: getProportionateScreenHeight(8),
+                          ),
+                          Text(
+                            "Upper Body",
+                            style: TextStyle(
+                                fontSize: getProportionateScreenHeight(24),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(15),
+                          ),
+                          Container(
+                            width: SizeConfig.screenWidth * 0.5,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 35,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      color: Colors.blueAccent,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12))),
+                                  child: Image.asset("assets/images/chest.png"),
+                                ),
+                                Container(
+                                  width: 35,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      color: Colors.blueAccent,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12))),
+                                  child: Image.asset("assets/images/chest.png"),
+                                ),
+                                Container(
+                                  width: 35,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      color: Colors.blueAccent,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12))),
+                                  child: Image.asset("assets/images/chest.png"),
+                                ),
+                                Container(
+                                  width: 35,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      color: Colors.blueAccent,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12))),
+                                  child: Image.asset("assets/images/chest.png"),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(25),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )
@@ -223,6 +333,66 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class TodayMeals extends StatelessWidget {
+  final String meal, title, calories, time, imgURL;
+  const TodayMeals({
+    Key? key,
+    required this.meal,
+    required this.title,
+    required this.calories,
+    required this.time,
+    required this.imgURL,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      width: SizeConfig.screenWidth * 0.25,
+      height: SizeConfig.screenHeight * 0.2,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: SizeConfig.screenHeight * 0.1,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(imgURL), fit: BoxFit.contain),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16))),
+          ),
+          SizedBox(
+            height: getProportionateScreenHeight(5),
+          ),
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(meal),
+                  Text(
+                    title,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: getProportionateScreenHeight(16)),
+                  ),
+                  Text("$calories kcal"),
+                  Text("$time min")
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
