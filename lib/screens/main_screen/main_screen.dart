@@ -7,15 +7,18 @@ import 'package:fitness_pal/size_config.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final int currPage;
+  const MainScreen({Key? key, required this.currPage}) : super(key: key);
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainScreenState createState() => _MainScreenState(currPage);
 }
 
 class _MainScreenState extends State<MainScreen> {
   List<Widget> _widgetOptions = [];
-  int _page = 0;
+  int _currentPage = 0;
+
+  _MainScreenState(this._currentPage);
 
   @override
   void initState() {
@@ -55,14 +58,15 @@ class _MainScreenState extends State<MainScreen> {
             size: 28,
           ),
         ],
+        index: _currentPage,
         onTap: (index) {
           setState(() {
-            _page = index;
+            _currentPage = index;
           });
         },
       ),
       body: SafeArea(
-        child: _widgetOptions.elementAt(_page),
+        child: _widgetOptions.elementAt(_currentPage),
         bottom: false,
         top: false,
       ),

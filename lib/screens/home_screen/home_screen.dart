@@ -1,3 +1,4 @@
+import 'package:fitness_pal/screens/main_screen/main_screen.dart';
 import 'package:fitness_pal/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -30,17 +31,18 @@ class _HomeScreenState extends State<HomeScreen> {
       "meal": "SNACK",
       "title": "Fruit granola",
       "calories": "271",
-      "imgURL": "assets/images/dumbell.png",
+      "imgURL": "assets/images/keto_snack.jpeg",
       "time": "10",
     },
     {
-      "meal": "DESSET",
+      "meal": "DESSERT",
       "title": "Fruit granola",
       "calories": "271",
       "imgURL": "assets/images/dumbell.png",
       "time": "10",
     }
   ];
+  List barColors = [Colors.green, Colors.red.shade200, Colors.blue];
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -63,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: getProportionateScreenHeight(10),
                 ),
                 Container(
-                  height: SizeConfig.screenHeight * 0.37,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -76,13 +77,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         Radius.circular(32),
                       )),
                   child: Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(format.format(now).toString(),
                                     style: TextStyle(
@@ -90,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontSize:
                                             getProportionateScreenHeight(16))),
                                 Text(
-                                  "Hello, David",
+                                  "Hello, Renny",
                                   style: TextStyle(
                                       fontSize:
                                           getProportionateScreenHeight(26),
@@ -98,18 +100,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )
                               ],
                             ),
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: Colors.black, width: 0.8)),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => MainScreen(
+                                                currPage: 3,
+                                              )),
+                                      (route) => false);
+                                },
+                                child: Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/images/user.jpeg")),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: Colors.black, width: 0.8)),
+                                ),
+                              ),
                             )
                           ],
                         ),
                         SizedBox(
-                          height: getProportionateScreenHeight(25),
+                          height: getProportionateScreenHeight(20),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,27 +204,31 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Container(
-                                width: SizeConfig.screenWidth * 0.45,
-                                height: SizeConfig.screenHeight * 0.25,
-                                child: ListView(
-                                  children: [
-                                    CustomProgressBar(
-                                      title: "PROTEIN",
-                                      amt: 0.1,
-                                      remAmt: "250",
-                                    ),
-                                    CustomProgressBar(
-                                      title: "PROTEIN",
-                                      amt: 0.1,
-                                      remAmt: "250",
-                                    ),
-                                    CustomProgressBar(
-                                      title: "PROTEIN",
-                                      amt: 0.1,
-                                      remAmt: "250",
-                                    ),
-                                  ],
-                                ))
+                              width: SizeConfig.screenWidth * 0.45,
+                              height: SizeConfig.screenHeight * 0.2,
+                              child: ListView(
+                                children: [
+                                  CustomProgressBar(
+                                    colors: barColors[0],
+                                    title: "PROTEIN",
+                                    amt: 0.1,
+                                    remAmt: "250",
+                                  ),
+                                  CustomProgressBar(
+                                    colors: barColors[1],
+                                    title: "CARBO",
+                                    amt: 0.2,
+                                    remAmt: "250",
+                                  ),
+                                  CustomProgressBar(
+                                    colors: barColors[2],
+                                    title: "VITAMIN C",
+                                    amt: 0.15,
+                                    remAmt: "250",
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         )
                       ],
@@ -217,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: getProportionateScreenHeight(15),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 12),
+                  padding: const EdgeInsets.only(left: 30),
                   child: Text(
                     "MEALS FOR TODAY",
                     style: TextStyle(
@@ -229,33 +251,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: getProportionateScreenHeight(10),
                 ),
-                Container(
-                  width: SizeConfig.screenWidth,
-                  height: SizeConfig.screenHeight * 0.23,
-                  padding: EdgeInsets.only(left: 12),
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: mealList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TodayMeals(
-                        meal: mealList[index]["meal"],
-                        title: mealList[index]["title"],
-                        calories: mealList[index]["calories"],
-                        imgURL: mealList[index]["imgURL"],
-                        time: mealList[index]["time"],
-                      );
-                    },
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Container(
+                    width: SizeConfig.screenWidth,
+                    height: SizeConfig.screenHeight * 0.23,
+                    padding: EdgeInsets.only(left: 12),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: mealList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return TodayMeals(
+                          meal: mealList[index]["meal"],
+                          title: mealList[index]["title"],
+                          calories: mealList[index]["calories"],
+                          imgURL: mealList[index]["imgURL"],
+                          time: mealList[index]["time"],
+                        );
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: getProportionateScreenHeight(15),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+                  padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
                   child: Container(
                     width: SizeConfig.screenWidth,
                     decoration: BoxDecoration(
-                        color: Colors.blue.shade900,
+                        color: Colors.teal.shade300,
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -265,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             "YOUR NEXT WORKOUT",
                             style: TextStyle(
-                                color: Colors.white54,
+                                color: Colors.white70,
                                 fontSize: getProportionateScreenHeight(14)),
                           ),
                           SizedBox(
@@ -282,51 +307,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: getProportionateScreenHeight(15),
                           ),
                           Container(
-                            width: SizeConfig.screenWidth * 0.5,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Container(
-                                  width: 35,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                      color: Colors.blueAccent,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12))),
-                                  child: Image.asset("assets/images/chest.png"),
+                                NextWorkOut(
+                                  imgURL: "assets/images/chest.png",
                                 ),
-                                Container(
-                                  width: 35,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                      color: Colors.blueAccent,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12))),
-                                  child: Image.asset("assets/images/chest.png"),
+                                NextWorkOut(
+                                  imgURL: "assets/images/back.png",
                                 ),
-                                Container(
-                                  width: 35,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                      color: Colors.blueAccent,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12))),
-                                  child: Image.asset("assets/images/chest.png"),
+                                NextWorkOut(
+                                  imgURL: "assets/images/biceps.png",
                                 ),
-                                Container(
-                                  width: 35,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                      color: Colors.blueAccent,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12))),
-                                  child: Image.asset("assets/images/chest.png"),
+                                NextWorkOut(
+                                  imgURL: "assets/images/chest.png",
                                 ),
                               ],
                             ),
                           ),
                           SizedBox(
-                            height: getProportionateScreenHeight(25),
+                            height: getProportionateScreenHeight(10),
                           )
                         ],
                       ),
@@ -342,8 +342,33 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+class NextWorkOut extends StatelessWidget {
+  final String imgURL;
+  const NextWorkOut({
+    Key? key,
+    required this.imgURL,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      margin: EdgeInsets.only(right: 15),
+      decoration: BoxDecoration(
+          color: Colors.teal.shade700,
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+      child: Image.asset(
+        imgURL,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
 class TodayMeals extends StatelessWidget {
   final String meal, title, calories, time, imgURL;
+
   const TodayMeals({
     Key? key,
     required this.meal,
@@ -364,50 +389,53 @@ class TodayMeals extends StatelessWidget {
             color: Colors.blue.shade800,
           ),
           borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: SizeConfig.screenHeight * 0.1,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(imgURL), fit: BoxFit.contain),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16))),
-          ),
-          SizedBox(
-            height: getProportionateScreenHeight(5),
-          ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(meal),
-                  SizedBox(
-                    height: getProportionateScreenHeight(5),
-                  ),
-                  Text(
-                    title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: getProportionateScreenHeight(14)),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(5),
-                  ),
-                  Text("$calories kcal"),
-                  SizedBox(
-                    height: getProportionateScreenHeight(5),
-                  ),
-                  Text("$time min")
-                ],
-              ),
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: SizeConfig.screenHeight * 0.1,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(imgURL), fit: BoxFit.contain),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16))),
             ),
-          )
-        ],
+            SizedBox(
+              height: getProportionateScreenHeight(5),
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(meal),
+                    SizedBox(
+                      height: getProportionateScreenHeight(5),
+                    ),
+                    Text(
+                      title,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: getProportionateScreenHeight(14)),
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(5),
+                    ),
+                    Text("$calories kcal"),
+                    SizedBox(
+                      height: getProportionateScreenHeight(5),
+                    ),
+                    Text("$time min")
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -416,8 +444,12 @@ class TodayMeals extends StatelessWidget {
 class CustomProgressBar extends StatelessWidget {
   final String title, remAmt;
   final double amt;
+  final Color colors;
   const CustomProgressBar(
-      {required this.title, required this.remAmt, required this.amt});
+      {required this.title,
+      required this.remAmt,
+      required this.amt,
+      required this.colors});
 
   @override
   Widget build(BuildContext context) {
@@ -448,7 +480,7 @@ class CustomProgressBar extends StatelessWidget {
                     borderRadius: BorderRadius.all(
                       Radius.circular(4),
                     ),
-                    color: Colors.green,
+                    color: colors,
                   ),
                 ),
               ),
