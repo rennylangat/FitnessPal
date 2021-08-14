@@ -16,14 +16,14 @@ class _HomeScreenState extends State<HomeScreen> {
       "meal": "BREAKFAST",
       "title": "Fruit granola",
       "calories": "271",
-      "imgURL": "assets/images/dumbell.png",
+      "imgURL": "assets/images/granola.png",
       "time": "10",
     },
     {
       "meal": "DINNER",
       "title": "Pesto pasta",
       "calories": "612",
-      "imgURL": "assets/images/dumbell.png",
+      "imgURL": "assets/images/pesto-pasta.jpg",
       "time": "16",
     },
     {
@@ -46,12 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
     DateTime now = DateTime.now();
     DateFormat format = DateFormat("EEEE, d MMMM");
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: null,
-        actions: null,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      //   leading: null,
+      //   actions: null,
+      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -59,6 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: getProportionateScreenHeight(10),
+                ),
                 Container(
                   height: SizeConfig.screenHeight * 0.37,
                   decoration: BoxDecoration(
@@ -69,11 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             blurRadius: 6,
                             spreadRadius: 6)
                       ],
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(32),
-                          bottomRight: Radius.circular(32))),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(32),
+                      )),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Column(
                       children: [
                         Row(
@@ -113,10 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              width: SizeConfig.screenWidth * 0.43,
-                              height: SizeConfig.screenHeight * 0.18,
+                              width: SizeConfig.screenWidth * 0.4,
+                              height: SizeConfig.screenHeight * 0.16,
                               alignment: Alignment.center,
                               child: SfRadialGauge(
+                                enableLoadingAnimation: true,
                                 axes: [
                                   RadialAxis(
                                     minimum: 0,
@@ -182,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Container(
-                                width: SizeConfig.screenWidth * 0.46,
+                                width: SizeConfig.screenWidth * 0.45,
                                 height: SizeConfig.screenHeight * 0.25,
                                 child: ListView(
                                   children: [
@@ -227,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   width: SizeConfig.screenWidth,
-                  height: SizeConfig.screenHeight * 0.2,
+                  height: SizeConfig.screenHeight * 0.23,
                   padding: EdgeInsets.only(left: 12),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -352,11 +356,13 @@ class TodayMeals extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 20),
-      width: SizeConfig.screenWidth * 0.25,
-      height: SizeConfig.screenHeight * 0.2,
+      margin: EdgeInsets.only(right: 15),
+      width: SizeConfig.screenWidth * 0.35,
+      height: SizeConfig.screenHeight * 0.22,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border: Border.all(
+            color: Colors.blue.shade800,
+          ),
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -380,13 +386,22 @@ class TodayMeals extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(meal),
+                  SizedBox(
+                    height: getProportionateScreenHeight(5),
+                  ),
                   Text(
                     title,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: getProportionateScreenHeight(16)),
+                        fontSize: getProportionateScreenHeight(14)),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(5),
                   ),
                   Text("$calories kcal"),
+                  SizedBox(
+                    height: getProportionateScreenHeight(5),
+                  ),
                   Text("$time min")
                 ],
               ),
@@ -407,16 +422,17 @@ class CustomProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: SizeConfig.screenWidth * 0.43,
       margin: const EdgeInsets.only(bottom: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: SizeConfig.screenWidth * 0.32,
+                width: SizeConfig.screenWidth * 0.25,
                 height: 10,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
@@ -436,9 +452,12 @@ class CustomProgressBar extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(
+                width: getProportionateScreenWidth(5),
+              ),
               Text(
                 "$remAmt g left",
-                overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.clip,
               ),
             ],
           )
