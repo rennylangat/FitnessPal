@@ -1,3 +1,4 @@
+import 'package:fitness_pal/screens/main_screen/components/single_meal.dart';
 import 'package:fitness_pal/screens/main_screen/main_screen.dart';
 import 'package:fitness_pal/size_config.dart';
 import 'package:flutter/material.dart';
@@ -394,14 +395,23 @@ class TodayMeals extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: SizeConfig.screenHeight * 0.1,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(imgURL), fit: BoxFit.contain),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(16),
-                      bottomRight: Radius.circular(16))),
+            Hero(
+              tag: "meals",
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SingleMeal()));
+                },
+                child: Container(
+                  height: SizeConfig.screenHeight * 0.1,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(imgURL), fit: BoxFit.contain),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(16))),
+                ),
+              ),
             ),
             SizedBox(
               height: getProportionateScreenHeight(5),

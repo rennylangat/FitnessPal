@@ -1,3 +1,4 @@
+import 'package:fitness_pal/screens/main_screen/main_screen.dart';
 import 'package:fitness_pal/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,10 @@ class _WorkOutScreenState extends State<WorkOutScreen> {
             color: Colors.black,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => MainScreen(currPage: 0)),
+                (route) => false);
           },
         ),
         actions: [
@@ -65,41 +69,99 @@ class _WorkOutScreenState extends State<WorkOutScreen> {
                 ),
                 Container(
                   width: SizeConfig.screenWidth,
-                  height: SizeConfig.screenHeight * 0.25,
+                  height: SizeConfig.screenHeight * 0.28,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 6,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                            width: SizeConfig.screenWidth * 0.4,
-                            height: SizeConfig.screenHeight * 0.22,
-                            margin: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                                border: Border.all(
-                                    color: Colors.grey.shade600, width: 1.2)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Body Workout number ${index + 1}",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            ));
+                        return FeaturedWorkoutCard(
+                          title: "Body Workout",
+                          time: "50 min",
+                          index: index,
+                        );
                       }),
-                )
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(30),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Plans set ",
+                      style: TextStyle(
+                          fontSize: getProportionateScreenHeight(18),
+                          fontWeight: FontWeight.w700),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: Colors.black,
+                          size: 18,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Container(
+                  width: SizeConfig.screenWidth,
+                  height: SizeConfig.screenHeight * 0.28,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 6,
+                      itemBuilder: (BuildContext context, int index) {
+                        return FeaturedWorkoutCard(
+                          title: "Press",
+                          time: "50 min",
+                          index: index,
+                        );
+                      }),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class FeaturedWorkoutCard extends StatelessWidget {
+  final String title, time;
+  final int index;
+  const FeaturedWorkoutCard({
+    Key? key,
+    required this.index,
+    required this.title,
+    required this.time,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: SizeConfig.screenWidth * 0.5,
+        height: SizeConfig.screenHeight * 0.25,
+        margin: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            border: Border.all(color: Colors.grey.shade600, width: 1.2)),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "$title ${index + 1}",
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ));
   }
 }
