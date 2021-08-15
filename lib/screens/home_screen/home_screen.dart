@@ -1,5 +1,6 @@
-import 'package:fitness_pal/screens/main_screen/components/single_meal.dart';
+import 'package:fitness_pal/screens/home_screen/components/single_meal.dart';
 import 'package:fitness_pal/screens/main_screen/main_screen.dart';
+import 'package:fitness_pal/screens/nextworkout_screen/nextworkout.dart';
 import 'package:fitness_pal/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "calories": "271",
       "imgURL": "assets/images/granola.png",
       "time": "10",
+      "id": 0
     },
     {
       "meal": "DINNER",
@@ -27,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "calories": "612",
       "imgURL": "assets/images/pesto-pasta.jpg",
       "time": "16",
+      "id": 1
     },
     {
       "meal": "SNACK",
@@ -34,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "calories": "271",
       "imgURL": "assets/images/keto_snack.jpeg",
       "time": "10",
+      "id": 2
     },
     {
       "meal": "DESSERT",
@@ -41,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "calories": "271",
       "imgURL": "assets/images/dumbell.png",
       "time": "10",
+      "id": 3
     }
   ];
   List barColors = [Colors.green, Colors.red.shade200, Colors.blue];
@@ -268,6 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           calories: mealList[index]["calories"],
                           imgURL: mealList[index]["imgURL"],
                           time: mealList[index]["time"],
+                          index: index,
                         );
                       },
                     ),
@@ -309,19 +315,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Container(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                NextWorkOut(
+                                NextWorkOutItm(
                                   imgURL: "assets/images/chest.png",
+                                  tapFun: () {
+                                    Navigator.of(context).push(_createRoute(0));
+                                  },
                                 ),
-                                NextWorkOut(
+                                NextWorkOutItm(
                                   imgURL: "assets/images/back.png",
+                                  tapFun: () {
+                                    Navigator.of(context).push(_createRoute(1));
+                                  },
                                 ),
-                                NextWorkOut(
+                                NextWorkOutItm(
                                   imgURL: "assets/images/biceps.png",
-                                ),
-                                NextWorkOut(
-                                  imgURL: "assets/images/chest.png",
+                                  tapFun: () {
+                                    Navigator.of(context).push(_createRoute(2));
+                                  },
                                 ),
                               ],
                             ),
@@ -343,25 +354,49 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class NextWorkOut extends StatelessWidget {
+Route _createRoute(int index) {
+  return PageRouteBuilder(
+      pageBuilder: (context, aimation, secondaryAnimation) =>
+          NextWorkOutScreen(index: index),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      });
+}
+
+class NextWorkOutItm extends StatelessWidget {
   final String imgURL;
-  const NextWorkOut({
+  final Function()? tapFun;
+  const NextWorkOutItm({
     Key? key,
     required this.imgURL,
+    required this.tapFun,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 50,
-      height: 50,
-      margin: EdgeInsets.only(right: 15),
-      decoration: BoxDecoration(
-          color: Colors.teal.shade700,
-          borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Image.asset(
-        imgURL,
-        color: Colors.white,
+    return GestureDetector(
+      onTap: tapFun,
+      child: Container(
+        width: 50,
+        height: 50,
+        margin: EdgeInsets.only(right: 25),
+        decoration: BoxDecoration(
+            color: Colors.teal.shade700,
+            borderRadius: BorderRadius.all(Radius.circular(12))),
+        child: Image.asset(
+          imgURL,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -369,7 +404,7 @@ class NextWorkOut extends StatelessWidget {
 
 class TodayMeals extends StatelessWidget {
   final String meal, title, calories, time, imgURL;
-
+  final int index;
   const TodayMeals({
     Key? key,
     required this.meal,
@@ -377,6 +412,7 @@ class TodayMeals extends StatelessWidget {
     required this.calories,
     required this.time,
     required this.imgURL,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -399,8 +435,12 @@ class TodayMeals extends StatelessWidget {
               tag: "meals",
               child: InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SingleMeal()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SingleMeal(
+                                index: index,
+                              )));
                 },
                 child: Container(
                   height: SizeConfig.screenHeight * 0.1,

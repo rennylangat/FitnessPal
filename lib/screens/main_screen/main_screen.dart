@@ -18,7 +18,9 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _widgetOptions = [];
   int _currentPage = 0;
 
-  _MainScreenState(this._currentPage);
+  _MainScreenState(
+    this._currentPage,
+  );
 
   @override
   void initState() {
@@ -36,9 +38,9 @@ class _MainScreenState extends State<MainScreen> {
     SizeConfig().init(context);
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.teal.shade200,
+        backgroundColor: Colors.teal.shade100,
         animationCurve: Curves.fastLinearToSlowEaseIn,
-        buttonBackgroundColor: Colors.teal.shade400,
+        buttonBackgroundColor: Colors.teal.shade300,
         height: 60.0,
         items: <Widget>[
           Icon(

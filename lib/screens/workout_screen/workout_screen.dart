@@ -32,7 +32,7 @@ class _WorkOutScreenState extends State<WorkOutScreen> {
           IconButton(
               onPressed: () {},
               icon: Icon(
-                Icons.menu_outlined,
+                Icons.person_outline_outlined,
                 color: Colors.black,
               ))
         ],
