@@ -1,3 +1,4 @@
+import 'package:fitness_pal/screens/main_screen/main_screen.dart';
 import 'package:fitness_pal/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -94,18 +95,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ProfileOptions(
                               title: "Go Pro",
                               icon: Icons.star_outline_outlined,
+                              profFun: () {},
                             ),
                             ProfileOptions(
                               title: "My Fitness Data",
                               icon: Icons.stacked_bar_chart,
+                              profFun: () {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MainScreen(currPage: 2)),
+                                    (route) => false);
+                              },
                             ),
                             ProfileOptions(
                               title: "Work Out Options",
                               icon: Icons.settings,
+                              profFun: () {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MainScreen(currPage: 1)),
+                                    (route) => false);
+                              },
                             ),
                             ProfileOptions(
-                                title: "Invite a friend",
-                                icon: Icons.person_add_alt_1_outlined),
+                              title: "Invite a friend",
+                              icon: Icons.person_add_alt_1_outlined,
+                              profFun: () {},
+                            )
                           ],
                         ),
                       ),
@@ -124,30 +142,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
 class ProfileOptions extends StatelessWidget {
   final String title;
   final IconData icon;
+  final Function()? profFun;
   const ProfileOptions({
     Key? key,
     required this.title,
     required this.icon,
+    required this.profFun,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: getProportionateScreenHeight(30)),
-      padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(icon),
-          Text(title),
-          Icon(
-            Icons.arrow_forward_ios_outlined,
-            size: 16,
-          )
-        ],
+    return GestureDetector(
+      onTap: profFun,
+      child: Container(
+        margin: EdgeInsets.only(bottom: getProportionateScreenHeight(30)),
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(icon),
+            Text(title),
+            Icon(
+              Icons.arrow_forward_ios_outlined,
+              size: 16,
+            )
+          ],
+        ),
       ),
     );
   }

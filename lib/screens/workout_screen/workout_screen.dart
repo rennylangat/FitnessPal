@@ -10,6 +10,56 @@ class WorkOutScreen extends StatefulWidget {
 }
 
 class _WorkOutScreenState extends State<WorkOutScreen> {
+  List<Map<String, dynamic>> featuredList = [
+    {
+      "title": "Body Workout",
+      "time": "40",
+      "imgURL": "assets/images/body-workout.jpeg"
+    },
+    {
+      "title": "Fitness Workout",
+      "time": "30",
+      "imgURL": "assets/images/fitness-workouts.jpeg"
+    },
+    {
+      "title": "Yoga Workout",
+      "time": "60",
+      "imgURL": "assets/images/body-workout.jpeg"
+    },
+    {
+      "title": "Body Workout",
+      "time": "50",
+      "imgURL": "assets/images/body-workout.jpeg"
+    },
+    {
+      "title": "Body Workout",
+      "time": "50",
+      "imgURL": "assets/images/body-workout.jpeg"
+    },
+  ];
+  List<Map<String, dynamic>> planSet = [
+    {
+      "title": "Press",
+      "time": "40",
+      "imgURL": "assets/images/triceps-dips.jpeg"
+    },
+    {"title": "Yoga", "time": "30", "imgURL": "assets/images/situps.jpeg"},
+    {
+      "title": "Yoga Workout",
+      "time": "60",
+      "imgURL": "assets/images/press-2.jpeg"
+    },
+    {
+      "title": "Body Workout",
+      "time": "50",
+      "imgURL": "assets/images/body-workout.jpeg"
+    },
+    {
+      "title": "Body Workout",
+      "time": "50",
+      "imgURL": "assets/images/body-workout.jpeg"
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,11 +122,12 @@ class _WorkOutScreenState extends State<WorkOutScreen> {
                   height: SizeConfig.screenHeight * 0.28,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 6,
+                      itemCount: featuredList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return FeaturedWorkoutCard(
-                          title: "Body Workout",
-                          time: "50 min",
+                          title: featuredList[index]["title"],
+                          time: featuredList[index]["time"] + " min",
+                          imgURL: featuredList[index]["imgURL"],
                           index: index,
                         );
                       }),
@@ -113,12 +164,13 @@ class _WorkOutScreenState extends State<WorkOutScreen> {
                   height: SizeConfig.screenHeight * 0.28,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 6,
+                      itemCount: planSet.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return FeaturedWorkoutCard(
-                          title: "Press",
-                          time: "50 min",
+                        return PlanSet(
+                          title: planSet[index]["title"],
+                          time: "",
                           index: index,
+                          imgURL: planSet[index]["imgURL"],
                         );
                       }),
                 ),
@@ -132,13 +184,14 @@ class _WorkOutScreenState extends State<WorkOutScreen> {
 }
 
 class FeaturedWorkoutCard extends StatelessWidget {
-  final String title, time;
+  final String title, time, imgURL;
   final int index;
   const FeaturedWorkoutCard({
     Key? key,
     required this.index,
     required this.title,
     required this.time,
+    required this.imgURL,
   }) : super(key: key);
 
   @override
@@ -149,17 +202,95 @@ class FeaturedWorkoutCard extends StatelessWidget {
         margin: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
-            border: Border.all(color: Colors.grey.shade600, width: 1.2)),
+            border: Border.all(color: Colors.grey.shade400, width: 1.2)),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "$title ${index + 1}",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "$title ",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "$time ",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w600),
+                  ),
+                ],
               ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: SizeConfig.screenWidth * 0.5,
+                height: SizeConfig.screenHeight * 0.22,
+                child: Image.asset(
+                  imgURL,
+                  fit: BoxFit.cover,
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+}
+
+class PlanSet extends StatelessWidget {
+  final String title, time, imgURL;
+  final int index;
+  const PlanSet({
+    Key? key,
+    required this.index,
+    required this.title,
+    required this.time,
+    required this.imgURL,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: SizeConfig.screenWidth * 0.5,
+        height: SizeConfig.screenHeight * 0.25,
+        margin: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            border: Border.all(color: Colors.grey.shade400, width: 1.2)),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "$title ",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "$time ",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: SizeConfig.screenWidth * 0.5,
+                height: SizeConfig.screenHeight * 0.22,
+                child: Image.asset(
+                  imgURL,
+                  fit: BoxFit.cover,
+                ),
+              )
             ],
           ),
         ));
