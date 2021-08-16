@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "id": 3
     }
   ];
-  List barColors = [Colors.green, Colors.red.shade200, Colors.blue];
+  List barColors = [Colors.teal, Colors.yellow.shade700, Colors.blueAccent];
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontSize:
                                             getProportionateScreenHeight(16))),
                                 Text(
-                                  "Hello, Renny",
+                                  "Hello, John",
                                   style: TextStyle(
                                       fontSize:
                                           getProportionateScreenHeight(26),
@@ -222,15 +222,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   CustomProgressBar(
                                     colors: barColors[1],
-                                    title: "CARBO",
+                                    title: "CARBS",
                                     amt: 0.2,
-                                    remAmt: "250",
+                                    remAmt: "800",
                                   ),
                                   CustomProgressBar(
                                     colors: barColors[2],
                                     title: "VITAMIN C",
                                     amt: 0.15,
-                                    remAmt: "250",
+                                    remAmt: "450",
                                   ),
                                 ],
                               ),
