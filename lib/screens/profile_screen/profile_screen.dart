@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Center(
                   child: Text(
-                    "John Doe",
+                    "Renny Langat",
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,

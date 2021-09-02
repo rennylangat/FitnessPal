@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontSize:
                                             getProportionateScreenHeight(16))),
                                 Text(
-                                  "Hello, John",
+                                  "Hello, Renny",
                                   style: TextStyle(
                                       fontSize:
                                           getProportionateScreenHeight(26),
